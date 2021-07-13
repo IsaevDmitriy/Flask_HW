@@ -14,7 +14,7 @@ print(response1)
 response2 = requests.get(f'{HOST}/api/get/1').json()
 print(response2)
 
-response3 = requests.put(f'{HOST}/api/put/1',
+response3 = requests.patch(f'{HOST}/api/patch/1',
                                 json={'header': 'Куплю',
                                 'definition': 'Клюшку',
                                 'username': 'Хоккеист'
@@ -22,5 +22,5 @@ response3 = requests.put(f'{HOST}/api/put/1',
 print(response3)
 
 
-response4 = requests.delete(f'{HOST}/api/delete/2').json()
+response4 = requests.delete(f'{HOST}/api/delete/1').json()
 print(response4)

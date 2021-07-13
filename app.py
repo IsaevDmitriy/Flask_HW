@@ -32,7 +32,9 @@ class Advertisement(db.Model):
             'created_on': self.created_on
         }
 
-
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
 
 @app.route('/api/get/<int:advertisement_id>', methods=['GET', ])
@@ -64,14 +66,15 @@ def delete_adv(advertisement_id):
         return 'Ошибка'
 
 
-@app.route('/api/put/<int:advertisement_id>', methods=['PUT', ])
-def put_adv(advertisement_id):
+@app.route('/api/patch/<int:advertisement_id>', methods=['PATCH', ])
+def patch_adv(advertisement_id):
     advertisement = Advertisement.query.get(advertisement_id)
-    db.session.delete(advertisement)
-    advertisement = Advertisement(**request.json)
-    db.session.add(advertisement)
-    db.session.commit()
-    return jsonify(advertisement.to_dict())
+    advertisement.update(**request.json)
+    try:
+        db.session.commit()
+        return jsonify(advertisement.to_dict())
+    except:
+        return 'Ошибка'
 
 
 
